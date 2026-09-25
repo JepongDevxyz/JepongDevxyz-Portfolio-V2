@@ -20,7 +20,7 @@ export const useTranslations = () => {
       return;
     }
 
-    const preferredLocale = navigator.language.split("-")[0].toLowerCase();
+    const preferredLocale = (navigator.language.split("-")[0] ?? "en").toLowerCase();
     locale.value = preferredLocale === "fil" || preferredLocale === "tl" ? "fil" : "en";
   });
 
