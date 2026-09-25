@@ -6,6 +6,7 @@ import PreviewCard from "../../projects/components/PreviewCard.vue";
 import NotchSection from "../../../components/NotchSection.vue";
 import Banner from "../../../components/Banner.vue";
 import { t } from "../../../i18n/utils/translate";
+import { isFeatureEnabled } from "../../../utils/features";
 
 import type { ProjectPreview } from "../../../content/types";
 
@@ -30,7 +31,7 @@ onMounted(loadPreviews);
 </script>
 
 <template>
-  <div v-if="loadedPreviews?.length" class="projects">
+  <div class="projects">
     <NotchSection class="projects-notch-start" />
     <NotchSection class="projects-notch-end" />
     <div class="grid">
@@ -42,6 +43,7 @@ onMounted(loadPreviews);
     <div class="grid">
       <div class="projects-cards">
         <PreviewCard v-for="preview in loadedPreviews" :key="preview.title" :preview="preview" />
+        <PreviewCard v-if="isFeatureEnabled('startProject')" />
       </div>
     </div>
   </div>
