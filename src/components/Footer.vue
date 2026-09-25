@@ -70,6 +70,7 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
         </div>
       </div>
       <div class="footer-credits">
+        <p>Portfolio of Jay-Ar Lee Espiritu</p>
         <div v-if="showAttribution" class="footer-credits-built">
           <p>
             {{ t("original-concept-by") }}
@@ -100,7 +101,7 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
             >
           </Clickable>
         </div>
-        <p>© {{ new Date().getFullYear() }} Placeholder Portfolio</p>
+        <p>© 2026 - Jepong Devxyz Portfolio</p>
       </div>
     </div>
   </footer>
