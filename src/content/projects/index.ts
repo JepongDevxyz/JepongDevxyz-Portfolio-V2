@@ -12,7 +12,11 @@ function simplifyModules(glob: Record<string, any>) {
   return result;
 }
 
+const englishProjectModules = simplifyModules(import.meta.glob("./en/*.ts", { eager: true }));
+
 export const projectModules = {
-  de: simplifyModules(import.meta.glob("./de/*.ts", { eager: true })),
-  en: simplifyModules(import.meta.glob("./en/*.ts", { eager: true })),
+  en: englishProjectModules,
+  // Project placeholders are currently shared until real portfolio projects
+  // are added; never fall back to the removed German content.
+  fil: englishProjectModules,
 } as const satisfies Record<Locale, Record<string, any>>;
