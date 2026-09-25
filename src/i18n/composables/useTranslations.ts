@@ -27,7 +27,8 @@ export const useTranslations = () => {
   watch(locale, (newLocale) => {
     if (!newLocale) return;
     window.localStorage.setItem("portfolio-locale", newLocale);
-    document.documentElement.lang = LOCALES[newLocale].iso;
+    const localeDefinition = LOCALES[newLocale];
+    if (localeDefinition) document.documentElement.lang = localeDefinition.iso;
   });
 
   watch(
