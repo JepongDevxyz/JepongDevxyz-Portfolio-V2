@@ -8,21 +8,27 @@ import type { Locale } from "../types";
 
 export const useTranslations = () => {
   onMounted(() => {
-    locale.value = window.localStorage.getItem("portfolio-locale") as Locale;
-    if (!locale.value) {
-      const preferredLocale = navigator.language.split("-")[0] as Locale;
-
-      if (preferredLocale in LOCALES) {
-        locale.value = preferredLocale;
-      } else {
-        locale.value = "en";
-      }
+    const storedLocale = window.localStorage.getItem("portfolio-locale");
+    if (storedLocale && storedLocale in LOCALES) {
+      locale.value = storedLocale as Locale;
+      return;
     }
+
+    // Migrate visitors who previously saved the removed German locale.
+    if (storedLocale === "de") {
+      locale.value = "fil";
+      return;
+    }
+
+    const preferredLocale = (navigator.language.split("-")[0] ?? "en").toLowerCase();
+    locale.value = preferredLocale === "fil" || preferredLocale === "tl" ? "fil" : "en";
   });
 
-  watch(locale, () => {
-    if (!locale.value) return;
-    window.localStorage.setItem("portfolio-locale", locale.value);
+  watch(locale, (newLocale) => {
+    if (!newLocale) return;
+    window.localStorage.setItem("portfolio-locale", newLocale);
+    const localeDefinition = LOCALES[newLocale];
+    if (localeDefinition) document.documentElement.lang = localeDefinition.iso;
   });
 
   watch(
