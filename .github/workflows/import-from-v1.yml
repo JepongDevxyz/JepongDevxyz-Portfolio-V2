@@ -23,9 +23,12 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
+          cp .github/workflows/import-from-v1.yml /tmp/import-from-v1.yml
           git clone --depth 1 https://github.com/JepongDevxyz/JepongDevxyz-Portfolio.git /tmp/source
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          rsync -a --exclude='.git' /tmp/source/ ./
+          rsync -a --exclude='.git' --exclude='.github/workflows/' /tmp/source/ ./
+          mkdir -p .github/workflows
+          cp /tmp/import-from-v1.yml .github/workflows/import-from-v1.yml
 
       - name: Verify imported source
         shell: bash
@@ -43,5 +46,3 @@ jobs:
           git add -A
           git commit -m "Import verified portfolio-2025 upstream build into Portfolio V2"
           git push origin HEAD:main
-
-# trigger import
